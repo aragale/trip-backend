@@ -47,11 +47,15 @@ def exists_by_user_name(user_name):
 def sign_in(user_name, password):
     """登入"""
     if user_name is None or password is None:
-        abort(400, error='信息不正确')
+        abort(400, error='Incomplete parameters')
     sess = get_session()
     try:
-        if user.check_password(user_name, password):
-            user_id = user.get_id_by_name(user_name)
+        # 查询对应的用户
+        selected_user = user.get_by_name_and_password(user_name, password)
+        # 判断查询到的用户
+        if selected_user:
+            # 若用户存在
+            user_id = selected_user.id
             # 删除原有效会话
             sess.query(Session). \
                 filter_by(user_id=user_id). \
@@ -64,6 +68,9 @@ def sign_in(user_name, password):
             sess.commit()
             LOGGER.info('用户"%s"登入"%s"', user_name, session_id)
             return {'user_id': user_id, 'session': session_id}
+        else:
+            # 若用户不存在
+            abort(400, error='wrong user name or password')
     except Exception as ex:
         LOGGER.error('登入异常', ex)
     finally:
