@@ -16,6 +16,6 @@ def root():
     return 'Welcome to Trip API!'
 
 
-def run(debug=False, host='127.0.0.1', port=5000):
+def run(debug=False, host='127.0.0.1', port=9000):
     LOGGER.info('trip启动')
     __FLASK_INSTANCE.run(debug=debug, host=host, port=port)
