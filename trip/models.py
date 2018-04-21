@@ -35,8 +35,7 @@ class Session(BASE):
     __tablename__ = 'sessions'
     id = Column(String(36), primary_key=True)
     user_id = Column(String(36), ForeignKey('users.id'))
-    created = Column(DateTime, default=datetime.datetime.now())
-    updated = Column(DateTime, default=datetime.datetime.now())
+    time = Column(DateTime, default=datetime.datetime.now())
 
 
 class User(BASE):
