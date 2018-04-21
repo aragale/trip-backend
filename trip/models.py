@@ -1,10 +1,42 @@
 import datetime
+import json
 
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text, JSON
+from sqlalchemy import TypeDecorator, types, Column, String, DateTime, ForeignKey, Text
 from sqlalchemy.ext.declarative import declarative_base
 
 # 基类
 BASE = declarative_base()
+
+
+class Json(TypeDecorator):
+    """类型装饰类"""
+
+    @property
+    def python_type(self):
+        return object
+
+    impl = types.String
+
+    def process_bind_param(self, value, dialect):
+        return json.dumps(value)
+
+    def process_literal_param(self, value, dialect):
+        return value
+
+    def process_result_value(self, value, dialect):
+        try:
+            return json.loads(value)
+        except (ValueError, TypeError):
+            return None
+
+
+class Session(BASE):
+    """会话"""
+    __tablename__ = 'sessions'
+    id = Column(String(36), primary_key=True)
+    user_id = Column(String(36), ForeignKey('users.id'))
+    created = Column(DateTime, default=datetime.datetime.now())
+    updated = Column(DateTime, default=datetime.datetime.now())
 
 
 class User(BASE):
@@ -18,13 +50,13 @@ class User(BASE):
 
 class FootPrint(BASE):
     """足迹"""
-    __tablename = 'foot_prints'
+    __tablename__ = 'foot_prints'
 
     id = Column(String(36), primary_key=True)
     title = Column(String(100), comment='标题')
     time = Column(DateTime, default=datetime.datetime.now(), comment='时间')
     description = Column(Text, comment='文字描述')
-    images = Column(JSON, comment='照片url列表')
+    images = Column(Json, comment='照片url列表')
     trace_id = Column(String(36), ForeignKey('traces.id'))
 
 
@@ -33,4 +65,4 @@ class Trace(BASE):
     __tablename__ = 'traces'
 
     id = Column(String(36), primary_key=True)
-    positions = Column(JSON, comment='定位点列表')
+    positions = Column(Json, comment='定位点列表')
