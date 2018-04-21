@@ -15,7 +15,7 @@ class Json(TypeDecorator):
     def python_type(self):
         return object
 
-    impl = types.String
+    impl = types.Text
 
     def process_bind_param(self, value, dialect):
         return json.dumps(value)
@@ -34,8 +34,8 @@ class Session(BASE):
     """会话"""
     __tablename__ = 'sessions'
     id = Column(String(36), primary_key=True)
-    user_id = Column(String(36), ForeignKey('users.id'))
-    time = Column(DateTime, default=datetime.datetime.now())
+    user_id = Column(String(36), ForeignKey('users.id'), comment='用户id')
+    time = Column(DateTime, default=datetime.datetime.now(), comment='创建时间')
 
 
 class User(BASE):
