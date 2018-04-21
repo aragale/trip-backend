@@ -41,7 +41,6 @@ class Session(BASE):
 class User(BASE):
     """用户"""
     __tablename__ = 'users'
-
     id = Column(String(36), primary_key=True)
     name = Column(String(36), unique=True, comment='用户名称，不可重复')
     password_hash = Column(String(128), comment='密码的SHA512哈希值')
@@ -50,7 +49,6 @@ class User(BASE):
 class FootPrint(BASE):
     """足迹"""
     __tablename__ = 'foot_prints'
-
     id = Column(String(36), primary_key=True)
     title = Column(String(100), comment='标题')
     time = Column(DateTime, default=datetime.datetime.now(), comment='时间')
@@ -62,6 +60,5 @@ class FootPrint(BASE):
 class Trace(BASE):
     """路途"""
     __tablename__ = 'traces'
-
     id = Column(String(36), primary_key=True)
     positions = Column(Json, comment='定位点列表')
