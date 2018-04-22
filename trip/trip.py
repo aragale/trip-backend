@@ -1,3 +1,4 @@
+"""主模块"""
 import logging
 
 from flask import Flask
@@ -13,7 +14,8 @@ __API.add_resource(User, '/users')
 
 @__FLASK_INSTANCE.route('/api', methods=['GET'])
 def root():
-    return 'Welcome to Trip API!'
+    """主页"""
+    return 'Welcome to Trip API! https://github.com/yzyzt/trip-backend.git'
 
 
 def run(debug=False, host='127.0.0.1', port=9000):

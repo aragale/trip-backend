@@ -1,3 +1,4 @@
+"""会话测试"""
 import unittest
 
 from trip.service import session

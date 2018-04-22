@@ -1,3 +1,4 @@
+"""用户控制器"""
 import logging
 
 from flask import request
