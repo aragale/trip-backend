@@ -19,7 +19,7 @@ def root():
     return 'Welcome to Trip API! https://github.com/yzyzt/trip-backend.git\r\n'
 
 
-def run(debug=False, host='127.0.0.1', port=9000):
+def run(debug=False, host='127.0.0.1', port=8002):
     """运行"""
     LOGGER.info('trip启动')
     __FLASK_INSTANCE.run(debug=debug, host=host, port=port)
