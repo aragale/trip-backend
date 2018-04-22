@@ -1,5 +1,6 @@
 """主模块"""
 import logging
+import os
 
 from flask import Flask
 from flask_restful import Api
@@ -15,9 +16,15 @@ __API.add_resource(User, '/users')
 @__FLASK_INSTANCE.route('/api', methods=['GET'])
 def root():
     """主页"""
-    return 'Welcome to Trip API! https://github.com/yzyzt/trip-backend.git'
+    return 'Welcome to Trip API! https://github.com/yzyzt/trip-backend.git\r\n'
 
 
 def run(debug=False, host='127.0.0.1', port=9000):
+    """运行"""
     LOGGER.info('trip启动')
     __FLASK_INSTANCE.run(debug=debug, host=host, port=port)
+
+
+if __name__ == '__main__':
+    LOGGER.info('PID=%d', os.getpid())
+    run()
