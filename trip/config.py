@@ -6,7 +6,6 @@ import os.path
 import yaml
 
 LOGGER = logging.getLogger(__name__)
-print('os.makedirs')
 # 切换工作路径到本文件所在路径
 path_of_file = os.path.dirname(os.path.abspath(__file__))
 os.chdir(path_of_file)

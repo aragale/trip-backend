@@ -5,12 +5,14 @@ import os
 from flask import Flask
 from flask_restful import Api
 
+from .controller.session import Session
 from .controller.user import User
 
 LOGGER = logging.getLogger(__name__)
 __FLASK_INSTANCE = Flask(__name__)
 __API = Api(__FLASK_INSTANCE, prefix='/api')
 __API.add_resource(User, '/users')
+__API.add_resource(Session, '/sessions')
 
 
 @__FLASK_INSTANCE.route('/api', methods=['GET'])
