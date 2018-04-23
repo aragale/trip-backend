@@ -12,6 +12,7 @@ LOGGER = logging.getLogger(__name__)
 
 def sign_up(user_name, password):
     """用户注册"""
+    LOGGER.info('用户注册，%s，%s', user_name, password)
     if user_name is None or password is None:
         # 信息不完整
         return {}
