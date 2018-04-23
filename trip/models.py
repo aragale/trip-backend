@@ -1,5 +1,7 @@
+"""模型类模块"""
 import datetime
 import json
+from collections import namedtuple
 
 from sqlalchemy import TypeDecorator, types, Column, String, DateTime, ForeignKey, Text
 from sqlalchemy.ext.declarative import declarative_base
@@ -62,3 +64,23 @@ class Trace(BASE):
     __tablename__ = 'traces'
     id = Column(String(36), primary_key=True)
     positions = Column(Json, comment='定位点列表')
+
+
+# 定位点
+Position = namedtuple('Position', 'time longitude latitude')
+
+
+def __position_hook(dct):
+    """定位对象钩子"""
+    return namedtuple('Position', dct.keys())(*dct.values())
+
+
+def as_position(json_string):
+    """字符串转定位点对象"""
+    return json.loads(json_string, object_hook=__position_hook)
+
+
+def as_position_list(json_string):
+    """字符串转定位点对象列表"""
+    dcts = json.loads(json_string)
+    return list(__position_hook(dct) for dct in dcts)

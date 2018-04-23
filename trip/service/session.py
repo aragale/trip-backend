@@ -1,25 +1,42 @@
+"""会话逻辑"""
 import logging
 import uuid
 
-from flask_restful import abort
 from sqlalchemy import func
 
 from ..data import get_session
-from ..models import Session, User
+from ..models import Session
 from ..service import user
 
 LOGGER = logging.getLogger(__name__)
 
 
-def is_valid(id):
+def get(session_id):
+    """根据ID获取会话"""
+    if session_id is None:
+        return {}
+    else:
+        sess = get_session()
+        try:
+            return sess.query(Session). \
+                filter_by(id=session_id). \
+                limit(1). \
+                first()
+        except Exception as ex:
+            LOGGER.error('根据ID获取会话异常', ex)
+        finally:
+            sess.close()
+
+
+def is_valid(session_id):
     """检查会话是否有效"""
-    if id is None:
+    if session_id is None:
         return False
     else:
         sess = get_session()
         try:
             return sess.query(func.count(Session.id)). \
-                       filter_by(id=id, is_deleted=0). \
+                       filter_by(id=session_id). \
                        limit(1). \
                        scalar() != 0
         except Exception as ex:
@@ -28,26 +45,11 @@ def is_valid(id):
             sess.close()
 
 
-def exists_by_user_name(user_name):
-    """根据用户名查询是否存在会话"""
-    sess = get_session()
-    try:
-        count = sess.query(func.count(Session.id)). \
-            join(User). \
-            filter(User.name == user_name). \
-            limit(1). \
-            scalar()
-        return count != 0
-    except Exception as ex:
-        LOGGER.error('根据用户姓名查询会话异常', ex)
-    finally:
-        sess.close()
-
-
 def sign_in(user_name, password):
     """登入"""
     if user_name is None or password is None:
-        abort(400, error='Incomplete parameters')
+        # 返回空
+        return {}
     sess = get_session()
     try:
         # 查询对应的用户
@@ -70,7 +72,7 @@ def sign_in(user_name, password):
             return {'user_id': user_id, 'session': session_id}
         else:
             # 若用户不存在
-            abort(400, error='wrong user name or password')
+            return {}
     except Exception as ex:
         LOGGER.error('登入异常', ex)
     finally:
@@ -84,8 +86,9 @@ def sign_out(session_id):
         ret = sess.query(Session). \
             filter_by(id=session_id). \
             delete(synchronize_session=False)
+        LOGGER.info('会话%s登出', session_id)
         sess.commit()
-        return ret
+        return {'status': 'ok'} if ret == 1 else {}
     except Exception as ex:
         LOGGER.error('登出异常', ex)
     finally:
