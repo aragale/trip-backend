@@ -27,6 +27,8 @@ def sign_up(user_name, password):
         return new_user
     except Exception as ex:
         LOGGER.error('注册用户异常', ex)
+        # 返回空
+        return {}
     finally:
         sess.close()
 

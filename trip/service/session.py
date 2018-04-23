@@ -75,6 +75,7 @@ def sign_in(user_name, password):
             return {}
     except Exception as ex:
         LOGGER.error('登入异常', ex)
+        return {}
     finally:
         sess.close()
 
