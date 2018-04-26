@@ -11,7 +11,7 @@ from .controller.user import User
 LOGGER = logging.getLogger(__name__)
 __FLASK_INSTANCE = Flask(__name__)
 __API = Api(__FLASK_INSTANCE, prefix='/api')
-__API.add_resource(User, '/users')
+__API.add_resource(User, '/users', '/users/<string:user_id>')
 __API.add_resource(Session, '/sessions')
 
 
