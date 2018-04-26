@@ -53,6 +53,7 @@ class FootPrint(BASE):
     __tablename__ = 'foot_prints'
     id = Column(String(36), primary_key=True)
     title = Column(String(100), comment='标题')
+    user_id = Column(String(36), ForeignKey('users.id'), comment='用户ID')
     time = Column(DateTime, default=datetime.datetime.now(), comment='时间')
     description = Column(Text, comment='文字描述')
     images = Column(Json, comment='照片url列表')
@@ -84,3 +85,13 @@ def as_position_list(json_string):
     """字符串转定位点对象列表"""
     dcts = json.loads(json_string)
     return list(__position_hook(dct) for dct in dcts)
+
+
+class FootPrintShare(BASE):
+    """ 足迹分享表 """
+    __tablename__ = 'foot_print_share'
+    id = Column(String(36), primary_key=True)
+    source_user_id = Column(String(36), ForeignKey('users.id'), comment='来源用户ID')
+    target_user_id = Column(String(36), ForeignKey('users.id'), comment='目标用户ID')
+    foot_print_id = Column(String(36), ForeignKey('foot_prints.id'), comment='足迹ID')
+    time = Column(DateTime, default=datetime.datetime.now(), comment='分享时间')

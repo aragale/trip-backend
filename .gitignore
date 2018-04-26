@@ -2,3 +2,4 @@ logs
 .idea
 trip/trip.db
 __pycache__
+.vscode
