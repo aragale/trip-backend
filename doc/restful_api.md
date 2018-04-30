@@ -94,3 +94,207 @@ Response response = client.newCall(request).execute();
 ```
 {} //空Json对象
 ```
+
+### 3 路途
+
+路径：/api/traces
+
+#### 3.1 创建路途
+
+1) 方法：POST
+
+2) 请求体：
+```
+[   //列表
+  { //点一
+    "time": "2018-04-20 23:11:11",  //时间
+    "longitude": 111.11,    //经度
+    "latitude": 111.11      //纬度
+  },
+  { //点二
+    "time": "2018-04-20 23:11:11",
+    "longitude": 111.11,
+    "latitude": 111.11
+  }
+]
+```
+
+3) 用户验证：header中添加「键」session，「值」{session_id}
+
+4) 返回体：
+```
+{
+    "id": "184b626a-44bd-4f8c-a4a4-d42ea2c15312",   //路途ID
+    "positions": [  //位置点列表，结构与【请求体】相同
+        {
+            "time": "2018-04-20 23:11:11",
+            "longitude": 111.11,
+            "latitude": 111.11
+        },
+        {
+            "time": "2018-04-20 23:11:11",
+            "longitude": 111.11,
+            "latitude": 111.11
+        }
+    ]
+}
+```
+
+#### 3.2 获取路途
+
+1) 路径：/api/traces/{trace_id}
+
+2) 方法：GET
+
+3) 用户验证：header中添加「键」session，「值」{session_id}
+
+4) 返回体：
+```
+{
+    "id": "184b626a-44bd-4f8c-a4a4-d42ea2c15312",
+    "positions": [
+        {
+            "time": "2018-04-20 23:11:11",
+            "longitude": 111.11,
+            "latitude": 111.11
+        },
+        {
+            "time": "2018-04-20 23:11:11",
+            "longitude": 111.11,
+            "latitude": 111.11
+        }
+    ]
+}
+```
+
+### 4 足迹
+
+路径：/api/foot-prints
+
+#### 4.1 创建足迹
+
+1) 方法：POST
+
+2) 请求体
+
+```
+{
+  "title": "test-title-0",  //标题
+  "description": "这是测试的描述",  //描述
+  "images": [   //图片URL列表
+    "image1",   //图片一
+    "image2"    //图片二
+  ],
+  "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2" //路途ID
+}
+```
+
+3) 用户验证：header中添加「键」session，「值」{session_id}
+
+4) 返回体：
+```
+{
+    "id": "9be3f953-32cc-4090-9ce2-07cff0114335",   //足迹ID
+    "title": "test-title-0",    //标题
+    "time": "2018-04-30T14:43:02.909629", //创建时间
+    "description": "这是测试的描述",
+    "images": [
+        "image1",
+        "image2"
+    ],
+    "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2"
+}
+```
+
+5) 示例：
+```
+curl -X POST \
+  http://localhost:8005/api/foot-prints \
+  -H 'content-type: application/json' \
+  -H 'session: c7023e6a-44fa-4200-a0c1-8677b23a4839' \
+  -d '{
+  "title": "test-title-0",
+  "description": "这是测试的描述",
+  "images": [
+    "image1",
+    "image2"
+  ],
+  "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2"
+}'
+```
+
+#### 4.2 获取足迹
+
+1) 方法：GET
+
+2) 路径：/api/foot-prints/{foot-print-id}
+
+3) 用户验证：header中添加「键」session，「值」{session_id}
+
+4) 返回体：
+```
+{
+    "id": "91673780-cbb6-4b0a-a100-8f14012079b8",
+    "title": "test-title-0",
+    "time": "2018-04-30T14:52:43.600842",
+    "description": "这是测试的描述",
+    "images": [
+        "image1",
+        "image2"
+    ],
+    "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2"
+}
+```
+
+#### 4.3 修改足迹
+
+1) 方法：PUT
+
+2) 路径：/api/foot-prints/{foot-print-id}
+
+3) 用户验证：header中添加「键」session，「值」{session_id}
+
+4) 请求体：
+```
+{
+    "title": "五一节，峨眉山",
+    "description": "劳动节，我和小伙伴一起去了峨眉山",
+    "images": [
+        "image1",
+        "image2"
+    ],
+    "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2"
+}
+```
+
+5) 返回体：
+```
+{
+    "id": "91673780-cbb6-4b0a-a100-8f14012079b8",
+    "title": "五一节，峨眉山",
+    "time": "2018-04-30T14:52:43.600842",
+    "description": "劳动节，我和小伙伴一起去了峨眉山",
+    "images": [
+        "image1",
+        "image2"
+    ],
+    "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2"
+}
+```
+
+6) 示例：
+```
+curl -X PUT \
+  http://localhost:8005/api/foot-prints/91673780-cbb6-4b0a-a100-8f14012079b8 \
+  -H 'content-type: application/json' \
+  -H 'session: c7023e6a-44fa-4200-a0c1-8677b23a4839' \
+  -d '{
+    "title": "五一节，峨眉山",
+    "description": "劳动节，我和小伙伴一起去了峨眉山",
+    "images": [
+        "image1",
+        "image2"
+    ],
+    "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2"
+}'
+```

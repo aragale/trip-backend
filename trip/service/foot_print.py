@@ -32,3 +32,42 @@ def create(json, user_id):
         return None
     finally:
         sess.close()
+
+
+def get(foot_print_id):
+    """ 获取足迹 """
+    sess = get_session()
+    try:
+        return sess.query(FootPrint). \
+            filter_by(id=foot_print_id). \
+            first()
+    except Exception as ex:
+        LOGGER.error('获取足迹异常')
+        return None
+    finally:
+        sess.close()
+
+
+def update(foot_print_id, json):
+    """ 修改足迹 """
+    sess = get_session()
+    # 由foot_print_id查出原有足迹
+    source = sess.query(FootPrint).\
+        filter_by(id=foot_print_id). \
+        first()
+    if source is None:
+        return None
+    else:
+        try:
+            source.title = json.get('title')
+            source.images = json.get('images')
+            source.trace_id = json.get('trace_id')
+            source.description = json.get('description')
+            # 提交
+            sess.commit()
+            return source
+        except Exception as ex:
+            LOGGER.error('修改足迹异常')
+            return None
+        finally:
+            sess.close()

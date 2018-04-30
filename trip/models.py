@@ -11,7 +11,7 @@ BASE = declarative_base()
 
 
 class Json(TypeDecorator):
-    """类型装饰类"""
+    """JSON类型装饰类"""
 
     @property
     def python_type(self):
@@ -49,7 +49,7 @@ class User(BASE):
 
 
 class FootPrint(BASE):
-    """足迹"""
+    """ 足迹 """
     __tablename__ = 'foot_prints'
     id = Column(String(36), primary_key=True)
     title = Column(String(100), comment='标题')
@@ -61,7 +61,7 @@ class FootPrint(BASE):
 
 
 class Trace(BASE):
-    """路途"""
+    """ 路途 """
     __tablename__ = 'traces'
     id = Column(String(36), primary_key=True)
     positions = Column(Json, comment='定位点列表')
@@ -72,17 +72,17 @@ Position = namedtuple('Position', 'time longitude latitude')
 
 
 def __position_hook(dct):
-    """定位对象钩子"""
+    """ 定位对象钩子 """
     return namedtuple('Position', dct.keys())(*dct.values())
 
 
 def as_position(json_string):
-    """字符串转定位点对象"""
+    """ 字符串转定位点对象 """
     return json.loads(json_string, object_hook=__position_hook)
 
 
 def as_position_list(json_string):
-    """字符串转定位点对象列表"""
+    """ 字符串转定位点对象列表 """
     dcts = json.loads(json_string)
     return list(__position_hook(dct) for dct in dcts)
 

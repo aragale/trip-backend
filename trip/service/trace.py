@@ -24,3 +24,17 @@ def create(json):
         return None
     finally:
         sess.close()
+
+
+def get(trace_id):
+    """ 获取路途 """
+    sess = get_session()
+    try:
+        return sess.query(Trace).\
+            filter_by(id=trace_id).\
+            first()
+    except Exception as ex:
+        LOGGER.error('获取路途')
+        return None
+    finally:
+        sess.close()

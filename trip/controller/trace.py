@@ -20,3 +20,11 @@ class Trace(Resource):
             return trace.create(json)
         else:
             return None
+    
+    @marshal_with(trace_fields)
+    def get(self, trace_id):
+        session_id = request.headers.get('session')
+        if session.is_valid(session_id):
+            return trace.get(trace_id)
+        else:
+            return None
