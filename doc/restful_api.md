@@ -298,3 +298,28 @@ curl -X PUT \
     "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2"
 }'
 ```
+
+#### 4.4 删除
+
+
+### 5 足迹列表
+#### 5.1 获取某个用户的足迹列表
+
+1) 方法：GET
+
+2) 路径：/api/foot-print-lists
+
+3) 查询参数：user_id={user_id}
+
+4) 用户验证：header中添加「键」session，「值」{session_id}
+
+5) 示例：
+URL：http://localhost:8005/api/foot-print-lists?user_id=59a2cc93-8812-4fcc-abb9-908b758f1e22
+
+响应体：
+```
+[
+    "f0034b36-efcb-4f36-8ab2-45f9c8b97a9a",
+    "91673780-cbb6-4b0a-a100-8f14012079b8"
+]
+```

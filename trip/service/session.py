@@ -91,7 +91,7 @@ def sign_out(session_id):
         sess.commit()
         return {'status': 'ok'} if ret == 1 else {}
     except Exception as ex:
-        LOGGER.error('登出异常', ex)
+        LOGGER.error('登出', ex)
     finally:
         sess.close()
 

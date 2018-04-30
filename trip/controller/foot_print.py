@@ -2,7 +2,7 @@
 from flask import request
 from flask_restful import Resource, fields, marshal_with
 
-from ..service import session, foot_print
+from ..service import foot_print, session
 
 
 class FootPrint(Resource):
@@ -43,5 +43,12 @@ class FootPrint(Resource):
         if session.is_valid(session_id):
             json = request.get_json(force=True)
             return foot_print.update(foot_print_id, json)
+        else:
+            return None
+
+    def delete(self, foot_print_id):
+        session_id = request.headers.get('session')
+        if session.is_valid(session_id):
+            return foot_print.delete(foot_print_id)
         else:
             return None

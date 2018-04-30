@@ -3,7 +3,7 @@ import logging
 import uuid
 
 from ..data import get_session
-from ..models import FootPrint
+from ..models import FootPrint, Trace
 
 LOGGER = logging.getLogger(__name__)
 
@@ -42,7 +42,7 @@ def get(foot_print_id):
             filter_by(id=foot_print_id). \
             first()
     except Exception as ex:
-        LOGGER.error('获取足迹异常')
+        LOGGER.error('获取足迹异常', ex)
         return None
     finally:
         sess.close()
@@ -67,7 +67,22 @@ def update(foot_print_id, json):
             sess.commit()
             return source
         except Exception as ex:
-            LOGGER.error('修改足迹异常')
+            LOGGER.error('修改足迹异常', ex)
             return None
         finally:
             sess.close()
+
+def delete(foot_print_id):
+    """ 删除足迹 """
+    sess = get_session()
+    try:
+        count = sess.query(FootPrint).\
+            filter_by(id=foot_print_id). \
+            delete(synchronize_session=False)
+        sess.commit()
+        return count
+    except Exception as ex:
+        LOGGER.error('删除足迹', ex)
+        return None
+    finally:
+        sess.close()
