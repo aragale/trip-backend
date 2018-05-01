@@ -28,7 +28,7 @@ def create(json, user_id):
         sess.commit()
         return new_foot_print
     except Exception as ex:
-        LOGGER.error('创建足迹异常')
+        LOGGER.error('创建足迹异常', extra=ex)
         return None
     finally:
         sess.close()
@@ -42,7 +42,7 @@ def get(foot_print_id):
             filter_by(id=foot_print_id). \
             first()
     except Exception as ex:
-        LOGGER.error('获取足迹异常', ex)
+        LOGGER.error('获取足迹异常', extra=ex)
         return None
     finally:
         sess.close()
@@ -67,22 +67,32 @@ def update(foot_print_id, json):
             sess.commit()
             return source
         except Exception as ex:
-            LOGGER.error('修改足迹异常', ex)
+            LOGGER.error('修改足迹异常', extra=ex)
             return None
         finally:
             sess.close()
+
 
 def delete(foot_print_id):
     """ 删除足迹 """
     sess = get_session()
     try:
-        count = sess.query(FootPrint).\
-            filter_by(id=foot_print_id). \
-            delete(synchronize_session=False)
+        # 查询足迹
+        old_foot_print_list = sess.query(FootPrint).\
+            filter_by(id=foot_print_id).\
+            all()
+        # delete(synchronize_session=False)
+        if old_foot_print_list:
+            # 删除对应的路途
+            sess.query(Trace).\
+                filter_by(id=old_foot_print_list[0].trace_id).\
+                delete(synchronize_session=False)
+            # 删除足迹
+            sess.delete(old_foot_print_list[0])
         sess.commit()
-        return count
+        return ''
     except Exception as ex:
-        LOGGER.error('删除足迹', ex)
-        return None
+        LOGGER.error('删除足迹', extra=ex)
+        return ''
     finally:
         sess.close()
