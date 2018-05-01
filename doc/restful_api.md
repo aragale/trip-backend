@@ -42,21 +42,6 @@
 
 3) 用户验证：header中添加「键」session，「值」{session_id}
 
-代码实例：
-```
-OkHttpClient client = new OkHttpClient();
-
-MediaType mediaType = MediaType.parse("application/json");
-RequestBody body = RequestBody.create(mediaType, "{\"password\": \"6faa7cb35dbb\",\"user_name\": \"sasdf\"\n}");
-Request request = new Request.Builder()
-  .url("http://localhost:8005/api/users/ab31e73d-6ca0-434b-8221-ae0896459cce")
-  .get()
-  .addHeader("session", "e883651f-c641-4e43-a4e5-2e2d869b585b") //注意此句
-  .build();
-
-Response response = client.newCall(request).execute();
-```
-
 4) 返回体
 ```
 {
@@ -212,23 +197,6 @@ Response response = client.newCall(request).execute();
     ],
     "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2"
 }
-```
-
-5) 示例：
-```
-curl -X POST \
-  http://localhost:8005/api/foot-prints \
-  -H 'content-type: application/json' \
-  -H 'session: c7023e6a-44fa-4200-a0c1-8677b23a4839' \
-  -d '{
-  "title": "test-title-0",
-  "description": "这是测试的描述",
-  "images": [
-    "image1",
-    "image2"
-  ],
-  "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2"
-}'
 ```
 
 #### 4.2 获取足迹
