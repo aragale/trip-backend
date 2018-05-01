@@ -95,6 +95,14 @@ Response response = client.newCall(request).execute();
 {} //空Json对象
 ```
 
+#### 2.2 登出
+
+1) 方法：DELETE
+
+2) 路径：/api/sessions/{session_id}
+
+3) 用户验证：header中添加「键」session，「值」{session_id}
+
 ### 3 路途
 
 路径：/api/traces
@@ -282,25 +290,13 @@ curl -X POST \
 }
 ```
 
-6) 示例：
-```
-curl -X PUT \
-  http://localhost:8005/api/foot-prints/91673780-cbb6-4b0a-a100-8f14012079b8 \
-  -H 'content-type: application/json' \
-  -H 'session: c7023e6a-44fa-4200-a0c1-8677b23a4839' \
-  -d '{
-    "title": "五一节，峨眉山",
-    "description": "劳动节，我和小伙伴一起去了峨眉山",
-    "images": [
-        "image1",
-        "image2"
-    ],
-    "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2"
-}'
-```
-
 #### 4.4 删除
 
+1) 方法:DELETE
+
+2) 路径:/api/foot-prints/{foot_print_id}
+
+3) 用户验证：header中添加「键」session，「值」{session_id} 
 
 ### 5 足迹列表
 #### 5.1 获取某个用户的足迹列表
