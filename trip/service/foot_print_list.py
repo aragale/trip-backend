@@ -16,7 +16,7 @@ def get(user_id):
             # 解开元祖，生成字符串列表
         return list(r[0] for r in result)
     except Exception as ex:
-        LOGGER.error('获取足迹列表')
+        LOGGER.error('获取足迹列表', ex)
         return None
     finally:
         sess.close()

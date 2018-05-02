@@ -28,7 +28,7 @@ def create(json, user_id):
         sess.commit()
         return new_foot_print
     except Exception as ex:
-        LOGGER.error('创建足迹异常', extra=ex)
+        LOGGER.error('创建足迹异常', ex)
         return None
     finally:
         sess.close()
@@ -42,7 +42,7 @@ def get(foot_print_id):
             filter_by(id=foot_print_id). \
             first()
     except Exception as ex:
-        LOGGER.error('获取足迹异常', extra=ex)
+        LOGGER.error('获取足迹异常', ex)
         return None
     finally:
         sess.close()
@@ -67,7 +67,7 @@ def update(foot_print_id, json):
             sess.commit()
             return source
         except Exception as ex:
-            LOGGER.error('修改足迹异常', extra=ex)
+            LOGGER.error('修改足迹异常', ex)
             return None
         finally:
             sess.close()
@@ -92,7 +92,7 @@ def delete(foot_print_id):
         sess.commit()
         return ''
     except Exception as ex:
-        LOGGER.error('删除足迹', extra=ex)
+        LOGGER.error('删除足迹', ex)
         return ''
     finally:
         sess.close()
