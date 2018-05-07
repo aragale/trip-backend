@@ -11,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 __FLASK_INSTANCE = Flask(__name__)
 __API = Api(__FLASK_INSTANCE, prefix='/api')
 __API.add_resource(user.User, '/users', '/users/<string:user_id>')
-__API.add_resource(session.Session, '/sessions')
+__API.add_resource(session.Session, '/sessions', '/sessions/<string:session_id>')
 __API.add_resource(foot_print.FootPrint, '/foot-prints',
                    '/foot-prints/<string:foot_print_id>')
 __API.add_resource(trace.Trace, '/traces', '/traces/<string:trace_id>')

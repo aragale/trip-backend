@@ -89,9 +89,10 @@ def sign_out(session_id):
             delete(synchronize_session=False)
         LOGGER.info('会话%s登出', session_id)
         sess.commit()
-        return {'status': 'ok'} if ret == 1 else {}
+        return True if ret == 1 else False
     except Exception as ex:
         LOGGER.error('登出', ex)
+        return False
     finally:
         sess.close()
 

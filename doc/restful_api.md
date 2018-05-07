@@ -86,8 +86,6 @@
 
 2) 路径：/api/sessions/{session_id}
 
-3) 用户验证：header中添加「键」session，「值」{session_id}
-
 ### 3 路途
 
 路径：/api/traces

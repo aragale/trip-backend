@@ -27,7 +27,6 @@ class Session(Resource):
         password = json.get('password')
         return session.sign_in(user_name, password)
 
-    def delete(self):
+    def delete(self, session_id):
         """登出"""
-        session_id = request.headers.get('session')
         return session.sign_out(session_id)
