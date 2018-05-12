@@ -24,43 +24,49 @@ SQLAlchemy 1.2.7，官网地址https://www.sqlalchemy.org，是Python语言的SQ
 
 ### 2.1 安装Python 3.6
 执行命令：
-
+```
 sudo add-apt-repository ppa:jonathonf/python-3.6
 sudo apt update
 sudo apt install python3.6
+```
 
 ### 2.2 安装Git
 执行命令：
-
+```
 sudo apt install git
-
+```
 ### 2.3 获取源代码
 此处假定将源代码程序文件置于家目录，执行命令：
+```
 cd ~
 git clone https://github.com/yzyzt/trip-backend
+```
 
 ### 2.4 安装依赖库
 执行命令：
-
+```
 cd ~/trip-backend
 sudo pip3.6 sintall -r requirements.txt
-
+```
 ### 2.5 设置防火墙
 后端程序需要监听TCP端口，所以需要设置防火墙（Ubuntu操作系统防火墙软件为ufw），使外界能够访问后端服务监听的TCP端口，此处假定程序监听8002端口，执行命令：
-
+```
 sudo ufw allow 8002/tcp
-
+```
 ### 2.6 启动与停止程序
 启动，执行命令：
-
+```
 cd ~/trip-backend
 /usr/bin/python3.6 trip.py start
-
+```
 停止，执行命令：
+```
 cd ~/trip-backend
 /usr/bin/python3.6 trip.py stop
-
+```
 重启，执行命令：
+```
 cd ~/trip-backend
 /usr/bin/python3.6 trip.py restart
+```
 
