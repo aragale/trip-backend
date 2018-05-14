@@ -10,13 +10,12 @@ def get(user_id):
     """获取足迹列表"""
     sess = get_session()
     try:
-        result = sess.query(FootPrint.id).\
+        return sess.query(FootPrint).\
             filter_by(user_id=user_id).\
+            order_by(FootPrint.time.desc()).\
             all()
-            # 解开元祖，生成字符串列表
-        return list(r[0] for r in result)
     except Exception as ex:
         LOGGER.error('获取足迹列表', ex)
-        return None
+        return []
     finally:
         sess.close()

@@ -281,7 +281,27 @@ URL：http://localhost:8005/api/foot-print-lists?user_id=59a2cc93-8812-4fcc-abb9
 响应体：
 ```
 [
-    "f0034b36-efcb-4f36-8ab2-45f9c8b97a9a",
-    "91673780-cbb6-4b0a-a100-8f14012079b8"
+    {
+        "id": "4d141ba5-8c3e-48c3-aa5a-2e00b144c9fa",
+        "title": "青城山",
+        "time": "2018-05-14T09:12:26.038879",
+        "description": "我和小伙伴去了青城山",
+        "images": [
+            "image1",
+            "image2"
+        ],
+        "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2"
+    },
+    {
+        "id": "669c55c5-b7b3-48ba-a968-697fb1bb28e4",
+        "title": "五一节，峨眉山",
+        "time": "2018-05-14T09:11:07.363176",
+        "description": "劳动节，我和小伙伴一起去了峨眉山",
+        "images": [
+            "image1",
+            "image2"
+        ],
+        "trace_id": "e5f39cd5-89a3-4972-97b2-02f8f532a2c2"
+    }
 ]
 ```
