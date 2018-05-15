@@ -78,21 +78,13 @@ def delete(foot_print_id):
     sess = get_session()
     try:
         # 查询足迹
-        old_foot_print_list = sess.query(FootPrint).\
-            filter_by(id=foot_print_id).\
-            all()
-        # delete(synchronize_session=False)
-        if old_foot_print_list:
-            # 删除对应的路途
-            sess.query(Trace).\
-                filter_by(id=old_foot_print_list[0].trace_id).\
-                delete(synchronize_session=False)
-            # 删除足迹
-            sess.delete(old_foot_print_list[0])
+        count = sess.query(FootPrint).\
+            filter_by(id=foot_print_id). \
+            delete(synchronize_session=False)
         sess.commit()
-        return ''
+        return count != 0
     except Exception as ex:
         LOGGER.error('删除足迹', ex)
-        return ''
+        return False
     finally:
         sess.close()

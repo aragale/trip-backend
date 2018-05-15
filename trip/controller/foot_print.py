@@ -51,4 +51,4 @@ class FootPrint(Resource):
         if session.is_valid(session_id):
             return foot_print.delete(foot_print_id)
         else:
-            return None
+            return False
