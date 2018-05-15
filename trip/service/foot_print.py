@@ -1,6 +1,7 @@
 """ 足迹逻辑 """
 import logging
 import uuid
+import datetime
 
 from ..data import get_session
 from ..models import FootPrint, Trace
@@ -21,7 +22,8 @@ def create(json, user_id):
         user_id=user_id,
         description=description,
         images=images,
-        trace_id=trace_id)
+        trace_id=trace_id,
+        time=datetime.datetime.now())
     sess = get_session()
     try:
         sess.add(new_foot_print)
